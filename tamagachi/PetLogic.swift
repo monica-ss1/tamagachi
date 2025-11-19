@@ -9,11 +9,19 @@ import SwiftUI
 import SpriteKit
 
 struct Pet {
+    // pet sprite
     let pet = SKSpriteNode(imageNamed: "Character")
     
-    func random(node: SKSpriteNode, within viewSize: CGSize) {
+    //
+    
+    // random movement
+    func random(node: SKSpriteNode, within viewSize: CGSize) -> SKAction {
         let randomY = CGFloat.random(in: 0...viewSize.width)
         let NewPosition = CGPoint(x: 50, y: randomY)
         let Move = SKAction.move(to: NewPosition, duration: 2.0)
+        return Move
     }
+    
+    //
+    
 }

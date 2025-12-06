@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SpriteKit
-
+/*
 struct Pet {
     // pet sprite
     let pet = SKSpriteNode(imageNamed: "Character")
@@ -22,6 +22,5 @@ struct Pet {
         return Move
     }
     
-    //
-    
 }
+*/

@@ -6,6 +6,8 @@
 //
 import Foundation
 import Combine
+import SwiftUI
+import SpriteKit
 
 class PetModel: ObservableObject {
 
@@ -17,6 +19,17 @@ class PetModel: ObservableObject {
 
     private var timer: Timer?
 
+    // pet sprite
+    let pet = SKSpriteNode(imageNamed: "Character")
+    
+    // random movement
+    func random(node: SKSpriteNode, within viewSize: CGSize) -> SKAction {
+        let randomY = CGFloat.random(in: 0...viewSize.width)
+        let NewPosition = CGPoint(x: 50, y: randomY)
+        let Move = SKAction.move(to: NewPosition, duration: 2.0)
+        return Move
+    }
+    
     init() {
         startDecay()
     }

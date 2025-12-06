@@ -5,22 +5,37 @@
 //  Created by Spencer Blunt on 11/18/25.
 //
 
+
 import SwiftUI
 import SpriteKit
-/*
-struct Pet {
-    // pet sprite
+
+class GameScene: SKScene {
+    
+    // pet sprite stored as a property
     let pet = SKSpriteNode(imageNamed: "Character")
     
-    //
-    
-    // random movement
-    func random(node: SKSpriteNode, within viewSize: CGSize) -> SKAction {
-        let randomY = CGFloat.random(in: 0...viewSize.width)
-        let NewPosition = CGPoint(x: 50, y: randomY)
-        let Move = SKAction.move(to: NewPosition, duration: 2.0)
-        return Move
+    override func didMove(to view: SKView) {
+        // Set up sprite
+        pet.position = CGPoint(x: 200, y: 200)
+        addChild(pet)
+
+        // Animation frames
+        let frames = [
+            SKTexture(imageNamed: "Character"),
+            SKTexture(imageNamed: "pet walk 1"),
+            SKTexture(imageNamed: "pet walk 2")
+        ]
+
+        let animation = SKAction.animate(with: frames, timePerFrame: 0.2)
+        pet.run(SKAction.repeatForever(animation))
     }
     
+    func death() {
+        let deathAction = SKAction.run {
+            self.pet.texture = SKTexture(imageNamed: "death")
+        }
+        
+        pet.run(deathAction)
+    }
 }
-*/
+

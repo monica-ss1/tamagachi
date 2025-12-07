@@ -41,7 +41,7 @@ struct GameView: View {
                             .bold()
                             .font(.title2)
                     }
-
+                    
                     // AFFECTION
                     HStack(spacing: 3) {
                         Image("Affection")
@@ -56,40 +56,56 @@ struct GameView: View {
                 }
                 .padding(.top, 30)
                 .padding(.leading, 9)
-
+                
                 Spacer()
-
+                
                 // Character at bottom
                 Image("Character")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 400, height: 400)
-
+                
                 // Buttons at bottom
-                HStack(spacing: 25) {
-                    Button(action: pet.feed) {
-                        Image("Food")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 120, height: 100)
+                
+                HStack {
+                    Spacer()
+                    
+                    HStack(spacing: 50) {
+                        
+                        // FEED BUTTON
+                        Button(action: pet.feed) {
+                            Text("🍖")
+                                .font(.system(size: 40))
+                                .frame(width: 80, height: 80)
+                                .background(Color(#colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)))
+                                .clipShape(Circle())
+                                .shadow(radius: 5)
+                        }
+                        
+                        // BATH BUTTON
+                        Button(action: pet.bathe) {
+                            Text("🧼")
+                                .font(.system(size: 40))
+                                .frame(width: 80, height: 80)
+                                .background(Color(#colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)))
+                                .clipShape(Circle())
+                                .shadow(radius: 6)
+                        }
+                        
+                        // LOVE BUTTON
+                        Button(action: pet.love) {
+                            Text("💗")
+                                .font(.system(size: 40))
+                                .frame(width: 80, height: 80)
+                                .background(Color(#colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)))
+                                .clipShape(Circle())
+                                .shadow(radius: 6)
+                        }
                     }
-
-                    Button(action: pet.bathe) {
-                        Image("Bath")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 120, height: 100)
-                    }
-
-                    Button(action: pet.love) {
-                        Image("Affection")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 120, height: 100)
-                    }
+                    
+                    Spacer()   // pushes buttons inward
                 }
-                .padding(.bottom, 40)
-            }
+                .padding(.bottom, 50) }
         }
         .overlay {
             if pet.isDead {

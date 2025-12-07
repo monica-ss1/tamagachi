@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "Group 1.png",
+      "filename" : "background.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Menu.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

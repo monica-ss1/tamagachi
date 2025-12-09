@@ -16,84 +16,108 @@ import SwiftUI
 
 struct GameView: View {
     @StateObject private var pet = PetModel()
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        ZStack {
-            // Background
-            Image("GameView")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea(edges: .all)
-                .clipped()
-            VStack(alignment: .leading) {
-                
-                // Top-left vertical scoreboard with progress bars
-                VStack(alignment: .leading, spacing: -10) {
-                    StatBar(imageName: "Food", value: pet.food, color: getColor(for: pet.food))
-                    StatBar(imageName: "Bath", value: pet.bath, color: getColor(for: pet.bath))
-                    StatBar(imageName: "Affection", value: pet.affection, color: getColor(for: pet.affection))
-                }
-                .padding(.top, 30)
-                .padding(.leading, 9)
-                
-                Spacer()
-                
-                // Character at bottom
-                Image("Character")
+            ZStack {
+                // Background
+                Image("GameView")
                     .resizable()
-                    .scaledToFit()
-                    .frame(width: 400, height: 400)
+                    .scaledToFill()
+                    .ignoresSafeArea(edges: .all)
+                    .clipped()
                 
-                // Buttons at bottom
-                HStack {
-                    Spacer()
+                VStack(alignment: .leading) {
                     
-                    HStack(spacing: 50) {
-                        // FOOD BUTTON (updated)
-                        Button(action: pet.feed) {
-                            Image("foodB")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 80, height: 80) //  image size
-                                .clipShape(Circle())
-                                .shadow(radius: 5)
-                                .contentShape(Circle())
-                        }
-                        .buttonStyle(.plain)
-                        .frame(width: 80, height: 80) // button keeps original space
-
-                        
-                        // BATH BUTTON (updated)
-                        Button(action: pet.bathe) {
-                            Image("bathB")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-                                .clipShape(Circle())
-                                .shadow(radius: 5)
-                                .contentShape(Circle())
-                        }
-                        .buttonStyle(.plain)
-                        .frame(width: 80, height: 80)
-                                
-                                
-                        // AFFECTION BUTTON (updated)
-                        Button(action: pet.love) {
-                            Image("affectionB")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-                                .clipShape(Circle())
-                                .shadow(radius: 5)
-                                .contentShape(Circle())
-                        }
-                        .buttonStyle(.plain)
-                        .frame(width: 80, height: 80)
+                    // Top-left vertical scoreboard with progress bars
+                    VStack(alignment: .leading, spacing: -10) {
+                        StatBar(imageName: "Food", value: pet.food, color: getColor(for: pet.food))
+                        StatBar(imageName: "Bath", value: pet.bath, color: getColor(for: pet.bath))
+                        StatBar(imageName: "Affection", value: pet.affection, color: getColor(for: pet.affection))
                     }
+                    .padding(.top, 30)
+                    .padding(.leading, 9)
                     
                     Spacer()
+                    
+                    // Character at bottom
+                    Image("Character")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 400, height: 400)
+                    
+                    // Buttons at bottom
+                    HStack {
+                        Spacer()
+                        
+                        HStack(spacing: 50) {
+                            // FOOD BUTTON (updated)
+                            Button(action: pet.feed) {
+                                Image("foodB")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 80) //  image size
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                                    .contentShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            .frame(width: 80, height: 80) // button keeps original space
+                            
+                            
+                            // BATH BUTTON (updated)
+                            Button(action: pet.bathe) {
+                                Image("bathB")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                                    .contentShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            .frame(width: 80, height: 80)
+                            
+                            
+                            // AFFECTION BUTTON (updated)
+                            Button(action: pet.love) {
+                                Image("affectionB")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                                    .contentShape(Circle())
+                            }
+                            .buttonStyle(.plain)
+                            .frame(width: 80, height: 80)
+                        }
+                        
+                        Spacer()
+                    }
+                    .padding(.bottom, 50)
                 }
-                .padding(.bottom, 50)
+                
+                // Main Menu Button top-right corner
+
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button {
+                                dismiss()
+                            } label: {
+                                Image("main menu button")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 80)
+                                    .clipShape(Circle())
+                                    .shadow(radius: 5)
+                            }
+                        }
+                        .padding(.top, 30)
+                        .padding(.trailing, 30)
+                        
+                        Spacer()
             }
         }
         .overlay {

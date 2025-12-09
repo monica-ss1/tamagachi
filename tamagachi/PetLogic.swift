@@ -10,6 +10,8 @@ import SwiftUI
 import SpriteKit
 
 class PetBrain: SKScene {
+    // pet object
+    let pet = SKSpriteNode(imageNamed: "Character")
     
     // set pet position
     override func didMove(to view: SKView) {
@@ -31,10 +33,17 @@ class PetBrain: SKScene {
 
         let animation = SKAction.animate(with: frames, timePerFrame: 0.2)
         NewPet.run(SKAction.repeatForever(animation))
+        Movement()
     }
     
-    //
-    
+    //random movement
+    func Movement() {
+        let ranX = CGFloat.random(in: 50...(size.width - 50))
+        let ranY = CGFloat.random(in: 50...(size.height - 50))
+        let MovetoRan = SKAction.move(to: CGPoint(x: ranX, y: ranY), duration: 3)
+        let RepeatMove = SKAction.sequence([MovetoRan, SKAction.run(Movement)])
+        pet.run(RepeatMove)
+    }
     
     // Death function
     func death(pet: SKSpriteNode) {

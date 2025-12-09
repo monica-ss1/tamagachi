@@ -1,17 +1,3 @@
-//  MenuView.swift
-//  tamagachi
-//
-//  Created by Monica soliman on 11/12/25.
-//
-
-
-//
-//  ContentView.swift
-//  Tomagatchi But Better
-//
-//  Created by csuftitan on 10/22/25.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -19,30 +5,45 @@ struct MenuView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Image("Menu")
+                Image("MenuBack")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
-
-                VStack(spacing: 25) {
+                Image("menu title")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 6, height: 60)
+                    .offset(y: -260)
+                VStack(spacing: -80){
                     NavigationLink(destination: GameView()) {
-                        Text("Play")
+                        Image("new game button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
                     }
-                    .buttonStyle(MenuButtonStyle())
-
-                    Button("Load") {
+                    Spacer()
+                            .frame(height: 25)
+                    Button {
                         loadTapped()
-                    }
-                    .buttonStyle(MenuButtonStyle())
+                    } label: {
+                        Image("play button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
 
-                    Button("Exit") {
-                        exitTapped()
                     }
-                    .buttonStyle(MenuButtonStyle())
+                    Spacer()
+                           .frame(height: 1)
+                    Button {
+                        exitTapped()
+                    } label: {
+                        Image("exit button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
+                    }
                 }
-                Spacer()
-                    .frame(height: 25)
-                    .padding()
+                .padding()
             }
         }
     }

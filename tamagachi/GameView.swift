@@ -1,10 +1,8 @@
 import SwiftUI
 
 struct GameView: View {
-    @Environment(\.dismiss) var dismiss
-    
     @StateObject private var pet = PetModel()
-
+    
     var body: some View {
         ZStack {
             // Background
@@ -15,44 +13,11 @@ struct GameView: View {
             
             VStack(alignment: .leading) {
                 
-                // Top-left vertical scoreboard
+                // Top-left vertical scoreboard with progress bars
                 VStack(alignment: .leading, spacing: -10) {
-                    
-                    // FOOD
-                    HStack(spacing: 3) {
-                        Image("Food")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.food)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
-                    
-                    // BATH
-                    HStack(spacing: 3) {
-                        Image("Bath")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.bath)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
-                    
-                    // AFFECTION
-                    HStack(spacing: 3) {
-                        Image("Affection")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.affection)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
+                    StatBar(imageName: "Food", value: pet.food, color: getColor(for: pet.food))
+                    StatBar(imageName: "Bath", value: pet.bath, color: getColor(for: pet.bath))
+                    StatBar(imageName: "Affection", value: pet.affection, color: getColor(for: pet.affection))
                 }
                 .padding(.top, 30)
                 .padding(.leading, 9)
@@ -66,7 +31,6 @@ struct GameView: View {
                     .frame(width: 400, height: 400)
                 
                 // Buttons at bottom
-                
                 HStack {
                     Spacer()
                     
@@ -103,9 +67,10 @@ struct GameView: View {
                         }
                     }
                     
-                    Spacer()   // pushes buttons inward
+                    Spacer()
                 }
-                .padding(.bottom, 50) }
+                .padding(.bottom, 50)
+            }
         }
         .overlay {
             if pet.isDead {
@@ -113,8 +78,19 @@ struct GameView: View {
             }
         }
     }
+    
+    // Helper function for color based on value
+    func getColor(for value: Int) -> Color {
+        if value > 60 {
+            return .green
+        } else if value > 30 {
+            return .red
+        } else {
+            return .yellow
+        }
+    }
 
-    // Death
+    // Death overlay
     private var deathOverlay: some View {
         VStack(spacing: 20) {
             Text("💀 Your Pet Died 💀")
@@ -134,6 +110,48 @@ struct GameView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.black.opacity(0.7))
         .ignoresSafeArea()
+    }
+}
+
+// StatBar component with image overlaying progress bar
+struct StatBar: View {
+    let imageName: String
+    let value: Int
+    let color: Color
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            // Progress bar and text (background layer)
+            HStack(spacing: 3) {
+                // Empty space for the image to overlap
+                Spacer()
+                    .frame(width: 22)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 0)
+                            .fill(Color.gray.opacity(0.3))
+                            .frame(width: 100, height: 12)
+                        
+                        RoundedRectangle(cornerRadius: 0)
+                            .fill(color)
+                            .frame(width: CGFloat(value), height: 30)
+                            .animation(.easeInOut(duration: 0.3), value: value)
+                    }
+                }
+            }
+            
+            // Image overlaying on top (foreground layer)
+            HStack {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 70)
+                
+                Spacer()
+            }
+        }
+        .frame(height: 70)
     }
 }
 

@@ -1,3 +1,17 @@
+
+//  tamagachi
+//
+//  Created by Monica soliman on 11/12/25.
+//
+
+
+//
+//  ContentView.swift
+//  Tomagatchi But Better
+//
+//  Created by csuftitan on 10/22/25.
+//
+
 import SwiftUI
 
 struct GameView: View {
@@ -15,48 +29,9 @@ struct GameView: View {
                 
                 // Top-left vertical scoreboard with progress bars
                 VStack(alignment: .leading, spacing: -10) {
-<<<<<<< HEAD
                     StatBar(imageName: "Food", value: pet.food, color: getColor(for: pet.food))
                     StatBar(imageName: "Bath", value: pet.bath, color: getColor(for: pet.bath))
                     StatBar(imageName: "Affection", value: pet.affection, color: getColor(for: pet.affection))
-=======
-                    
-                    // FOOD
-                    HStack(spacing: 3) {
-                        Image("Food")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.food)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
-                    
-                    // BATH
-                    HStack(spacing: 3) {
-                        Image("Bath")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.bath)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
-                    
-                    // AFFECTION
-                    HStack(spacing: 3) {
-                        Image("Affection")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.affection)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
->>>>>>> origin
                 }
                 .padding(.top, 30)
                 .padding(.leading, 9)
@@ -70,10 +45,6 @@ struct GameView: View {
                     .frame(width: 400, height: 400)
                 
                 // Buttons at bottom
-<<<<<<< HEAD
-=======
-                
->>>>>>> origin
                 HStack {
                     Spacer()
                     
@@ -110,16 +81,10 @@ struct GameView: View {
                         }
                     }
                     
-<<<<<<< HEAD
                     Spacer()
                 }
                 .padding(.bottom, 50)
             }
-=======
-                    Spacer()   // pushes buttons inward
-                }
-                .padding(.bottom, 50) }
->>>>>>> origin
         }
         .overlay {
             if pet.isDead {

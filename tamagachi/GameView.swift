@@ -1,3 +1,17 @@
+
+//  tamagachi
+//
+//  Created by Monica soliman on 11/12/25.
+//
+
+
+//
+//  ContentView.swift
+//  Tomagatchi But Better
+//
+//  Created by csuftitan on 10/22/25.
+//
+
 import SwiftUI
 
 struct GameView: View {
@@ -8,55 +22,16 @@ struct GameView: View {
             // Background
             Image("GameView")
                 .resizable()
-                .scaledToFit()
-                .ignoresSafeArea()
-            
+                .scaledToFill()
+                .ignoresSafeArea(edges: .all)
+                .clipped()
             VStack(alignment: .leading) {
                 
                 // Top-left vertical scoreboard with progress bars
                 VStack(alignment: .leading, spacing: -10) {
-<<<<<<< HEAD
                     StatBar(imageName: "Food", value: pet.food, color: getColor(for: pet.food))
                     StatBar(imageName: "Bath", value: pet.bath, color: getColor(for: pet.bath))
                     StatBar(imageName: "Affection", value: pet.affection, color: getColor(for: pet.affection))
-=======
-                    
-                    // FOOD
-                    HStack(spacing: 3) {
-                        Image("Food")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.food)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
-                    
-                    // BATH
-                    HStack(spacing: 3) {
-                        Image("Bath")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.bath)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
-                    
-                    // AFFECTION
-                    HStack(spacing: 3) {
-                        Image("Affection")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 150, height: 70)
-                        Text("\(pet.affection)")
-                            .foregroundColor(.white)
-                            .bold()
-                            .font(.title2)
-                    }
->>>>>>> origin
                 }
                 .padding(.top, 30)
                 .padding(.leading, 9)
@@ -70,56 +45,56 @@ struct GameView: View {
                     .frame(width: 400, height: 400)
                 
                 // Buttons at bottom
-<<<<<<< HEAD
-=======
-                
->>>>>>> origin
                 HStack {
                     Spacer()
                     
                     HStack(spacing: 50) {
-                        
-                        // FEED BUTTON
+                        // FOOD BUTTON (updated)
                         Button(action: pet.feed) {
-                            Text("🍖")
-                                .font(.system(size: 40))
-                                .frame(width: 80, height: 80)
-                                .background(Color(#colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)))
+                            Image("foodB")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80) //  image size
                                 .clipShape(Circle())
                                 .shadow(radius: 5)
+                                .contentShape(Circle())
                         }
+                        .buttonStyle(.plain)
+                        .frame(width: 80, height: 80) // button keeps original space
+
                         
-                        // BATH BUTTON
+                        // BATH BUTTON (updated)
                         Button(action: pet.bathe) {
-                            Text("🧼")
-                                .font(.system(size: 40))
+                            Image("bathB")
+                                .resizable()
+                                .scaledToFit()
                                 .frame(width: 80, height: 80)
-                                .background(Color(#colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)))
                                 .clipShape(Circle())
-                                .shadow(radius: 6)
+                                .shadow(radius: 5)
+                                .contentShape(Circle())
                         }
-                        
-                        // LOVE BUTTON
+                        .buttonStyle(.plain)
+                        .frame(width: 80, height: 80)
+                                
+                                
+                        // AFFECTION BUTTON (updated)
                         Button(action: pet.love) {
-                            Text("💗")
-                                .font(.system(size: 40))
+                            Image("affectionB")
+                                .resizable()
+                                .scaledToFit()
                                 .frame(width: 80, height: 80)
-                                .background(Color(#colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)))
                                 .clipShape(Circle())
-                                .shadow(radius: 6)
+                                .shadow(radius: 5)
+                                .contentShape(Circle())
                         }
+                        .buttonStyle(.plain)
+                        .frame(width: 80, height: 80)
                     }
                     
-<<<<<<< HEAD
                     Spacer()
                 }
                 .padding(.bottom, 50)
             }
-=======
-                    Spacer()   // pushes buttons inward
-                }
-                .padding(.bottom, 50) }
->>>>>>> origin
         }
         .overlay {
             if pet.isDead {

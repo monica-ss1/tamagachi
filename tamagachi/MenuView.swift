@@ -21,8 +21,7 @@ struct MenuView: View {
                             .scaledToFit()
                             .frame(width: 250, height: 250)
                     }
-                    Spacer()
-                            .frame(height: 25)
+                    
                     Button {
                         loadTapped()
                     } label: {
@@ -32,8 +31,6 @@ struct MenuView: View {
                             .frame(width: 250, height: 250)
 
                     }
-                    Spacer()
-                           .frame(height: 1)
                     Button {
                         exitTapped()
                     } label: {
@@ -43,13 +40,14 @@ struct MenuView: View {
                             .frame(width: 250, height: 250)
                     }
                 }
-                .padding()
             }
         }
     }
 
     func loadTapped() {
         print("Load tapped")
+        let LoadFunction = PetModel()
+        LoadFunction.loadStats()
     }
 
     func exitTapped() {

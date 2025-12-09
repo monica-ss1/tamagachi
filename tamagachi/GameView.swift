@@ -13,10 +13,20 @@
 //
 
 import SwiftUI
+import SpriteKit
 
 struct GameView: View {
     @StateObject private var pet = PetModel()
     @Environment(\.dismiss) private var dismiss
+    
+    // Pet Spawn
+    var scene: SKScene {
+        let pet = PetBrain()
+        pet.size = CGSize(width: 400, height: 400)
+        pet.scaleMode = .resizeFill
+        pet.backgroundColor = .clear
+        return pet
+    }
     
     var body: some View {
             ZStack {
@@ -26,6 +36,10 @@ struct GameView: View {
                     .scaledToFill()
                     .ignoresSafeArea(edges: .all)
                     .clipped()
+                
+                // Sputs pet on top of background
+                SKViewContainer(scene: scene)
+                    .ignoresSafeArea()
                 
                 VStack(alignment: .leading) {
                     
@@ -40,11 +54,6 @@ struct GameView: View {
                     
                     Spacer()
                     
-                    // Character at bottom
-                    Image("Character")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 400, height: 400)
                     
                     // Buttons at bottom
                     HStack {
@@ -125,6 +134,20 @@ struct GameView: View {
                 deathOverlay
             }
         }
+    }
+    
+    // Helper function for pet sprite spawning
+    struct SKViewContainer: UIViewRepresentable {
+        let scene: SKScene
+
+        func makeUIView(context: Context) -> SKView {
+            let view = SKView()
+            view.presentScene(scene)
+            view.allowsTransparency = true  //for background image to show
+            return view
+        }
+
+        func updateUIView(_ uiView: SKView, context: Context) {}
     }
     
     // Helper function for color based on value

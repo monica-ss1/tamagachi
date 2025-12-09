@@ -9,15 +9,18 @@
 import SwiftUI
 import SpriteKit
 
-class GameScene: SKScene {
+class PetBrain: SKScene {
     
-    // pet sprite stored as a property
-    let pet = SKSpriteNode(imageNamed: "Character")
-    
+    // set pet position
     override func didMove(to view: SKView) {
+        SpawnPet(at:CGPoint(x: 200, y: 300))
+    }
+    func SpawnPet(at position: CGPoint) {
         // Set up sprite
-        pet.position = CGPoint(x: 200, y: 200)
-        addChild(pet)
+        let NewPet = SKSpriteNode(imageNamed: "Character")
+        NewPet.position = position
+        NewPet.zPosition = 1
+        addChild(NewPet)
 
         // Animation frames
         let frames = [
@@ -27,14 +30,18 @@ class GameScene: SKScene {
         ]
 
         let animation = SKAction.animate(with: frames, timePerFrame: 0.2)
-        pet.run(SKAction.repeatForever(animation))
+        NewPet.run(SKAction.repeatForever(animation))
     }
     
-    func death() {
+    //
+    
+    
+    // Death function
+    func death(pet: SKSpriteNode) {
         let deathAction = SKAction.run {
-            self.pet.texture = SKTexture(imageNamed: "death")
+            pet.texture = SKTexture(imageNamed: "death")
         }
-        
+        // kill
         pet.run(deathAction)
     }
 }

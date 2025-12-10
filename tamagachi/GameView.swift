@@ -1,17 +1,13 @@
-
 //  tamagachi
 //
 //  Created by Monica soliman on 11/12/25.
 //
-
-
 //
 //  ContentView.swift
 //  Tomagatchi But Better
 //
 //  Created by csuftitan on 10/22/25.
 //
-
 import SwiftUI
 import SpriteKit
 
@@ -150,8 +146,19 @@ struct GameView: View {
                     
                     Button("Restart") {
                         pet.restart()
+                        
+                        // Reset scene completely
                         scene.ResetPet()
                         SceneReady = false
+                        
+                        // Respawn pet immediately
+                        let center = CGPoint(
+                            x: UIScreen.main.bounds.midX,
+                            y: UIScreen.main.bounds.midY
+                        )
+                        scene.SpawnPet(at: center)
+                        scene.PetSpawned = true
+                        scene.Movement(for: scene.pet)
                     }
                     .padding()
                     .background(Color.white)

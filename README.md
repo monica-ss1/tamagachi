@@ -10,9 +10,9 @@ You have three main abilities to interact with your pet:
 
 There is a save function so your stats will save even if you close the app. There is also the ability to restart if you would like.
 ## Technologies Used
-1.SwiftUI — UI and layout
-2.SpriteKit — Pet animation and movement
-3.UserDefaults — Saving and loading stats
+SwiftUI — UI and layout
+SpriteKit — Pet animation and movement
+UserDefaults — Saving and loading stats
 
 ## Screenshots
 

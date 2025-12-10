@@ -19,6 +19,8 @@ class PetModel: ObservableObject {
 
     private var timer: Timer?
     
+    weak var scene: PetBrain?
+    
     // decay rate per 20 minutes offline/online
         private let foodDecay = 2
         private let bathDecay = 2
@@ -127,6 +129,7 @@ class PetModel: ObservableObject {
             isDead = true
             saveStats()
             stopDecay()
+            scene?.death()
         }
     }
 

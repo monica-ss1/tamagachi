@@ -35,6 +35,8 @@ struct GameView: View {
                     SKViewContainer(scene: scene)
                         .frame(width: geo.size.width, height: geo.size.height)
                         .onAppear {
+                            pet.scene = scene
+                            // spawns pet once
                             if !SceneReady {
                                 scene.size = geo.size
                                 let center = CGPoint(x: geo.size.width/2, y: geo.size.height/2)
@@ -179,7 +181,6 @@ struct GameView: View {
             let view = SKView()
             view.allowsTransparency = true  //for background image to show
             view.backgroundColor = .clear
-
             view.presentScene(scene)
             return view
         }

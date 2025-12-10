@@ -1,0 +1,21 @@
+GameView.swift Test Cases 
+TC-001: Verified hunger decreases over time when idle
+TC-002: Verfied cleaniness decreases over time when idle
+TC-003 : Verified attention/care decreases over time when idel
+TC-003: Verfied that the Feed button works to increase status bar on hunger
+TC-004: Verfied that the Clean button works to increase status bar on cleanliness
+TC-006: Verified that the Attention button works to increase status bar on attention
+TC-007: Menu button navigates Players back to the Main Menu
+TC-008: Death Overlay appears after one of three status bars equal zero
+TC-009: Reset button verfied to reset Pet and Status Bars
+
+Pet Functionalities 
+TC-001: Animations are verified to be working
+TC-002: Random walking confirmed to be workig=ng
+
+MenuView.swift Test Case
+TC-001: Play button navigates to User to GameView
+TC-002: New Game button verified to reset status bar
+TC-003: Exit button verified to close game
+
+Demo: https://youtu.be/T2uD7-OWVXo?si=1UqKSiEfJ7OF_ypB

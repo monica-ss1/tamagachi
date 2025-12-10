@@ -1,5 +1,4 @@
-//
-//  PetLogic.swift
+// PetLogic.swift
 //  tamagachi
 //
 //  Created by Spencer Blunt on 11/18/25.
@@ -23,7 +22,12 @@ class PetBrain: SKScene {
     }
     
     func SpawnPet(at position: CGPoint) {
-        guard pet == nil else { return }
+        // FIX: allow respawn by removing old pet if it exists
+        if pet != nil {
+            pet.removeFromParent()
+            pet = nil
+        }
+        
         // Set up sprite
         pet = SKSpriteNode(imageNamed: "Character")
         pet.position = position
@@ -81,6 +85,7 @@ class PetBrain: SKScene {
     func ResetPet() {
         self.removeAllActions()
         self.removeAllChildren()
+        self.pet = nil     // FIX: allow respawn
         self.PetSpawned = false
     }
     
@@ -90,4 +95,3 @@ class PetBrain: SKScene {
         pet.texture = SKTexture(imageNamed: "death")
     }
 }
-

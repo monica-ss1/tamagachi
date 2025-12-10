@@ -197,9 +197,9 @@ struct GameView: View {
         if value > 60 {
             return .green
         } else if value > 30 {
-            return .red
-        } else {
             return .yellow
+        } else {
+            return .red
         }
     }
 

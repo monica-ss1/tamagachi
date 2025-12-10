@@ -19,13 +19,14 @@ struct MenuView: View {
                     .offset(y: -260)
 
                 VStack(spacing: -80){
+                    // Play button
                     NavigationLink(value: "game") {
                         Image("play button")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 250, height: 250)
                     }
-                    
+                    // New game button
                     Button {
                         newTapped()
                         navigationPath.append("game")
@@ -37,7 +38,7 @@ struct MenuView: View {
                             .frame(width: 250, height: 250)
                         
                     }
-                    
+                    // Exit game button
                     Button {
                         exitTapped()
                     } label: {
@@ -59,8 +60,8 @@ struct MenuView: View {
     
     func newTapped() {
         print("New Game tapped")
-        //let NewFunction = PetModel()
-        //NewFunction.restart()
+        let NewFunction = PetModel()
+        NewFunction.restart()
     }
 
     func exitTapped() {

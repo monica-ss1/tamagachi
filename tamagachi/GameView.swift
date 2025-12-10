@@ -131,6 +131,7 @@ struct GameView: View {
                                     .clipShape(Circle())
                                     .shadow(radius: 5)
                             }
+                            .zIndex(1)
                         }
                         .padding(.top, 30)
                         .padding(.trailing, 30)
@@ -138,6 +139,7 @@ struct GameView: View {
                         Spacer()
             }
         }
+        .navigationBarBackButtonHidden(true)
         .overlay {
             if pet.isDead {
                 VStack(spacing: 20) {
@@ -173,6 +175,7 @@ struct GameView: View {
             view.allowsTransparency = true  //for background image to show
             view.backgroundColor = .clear
             view.presentScene(scene)
+            view.isUserInteractionEnabled = false
             return view
         }
 

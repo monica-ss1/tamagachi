@@ -10,8 +10,9 @@ import SwiftUI
 import SpriteKit
 
 class PetBrain: SKScene {
+    
     // pet object
-    let pet = SKSpriteNode(imageNamed: "Character")
+    var pet: SKSpriteNode!
     
     // set pet position
     override func didMove(to view: SKView) {
@@ -23,35 +24,48 @@ class PetBrain: SKScene {
         NewPet.position = position
         NewPet.zPosition = 1
         addChild(NewPet)
-
+        self.pet = NewPet
+        Movement(for: NewPet)
+    }
+    
+    //random movement
+    func Movement(for pet: SKSpriteNode) {
+        let ranX = CGFloat.random(in: 50...(size.width - 50))
+        let ranY = CGFloat.random(in: 50...(size.height - 50))
+        let MovetoRan = CGPoint(x: ranX, y: ranY)
+        
         // Animation frames
         let frames = [
             SKTexture(imageNamed: "Character"),
             SKTexture(imageNamed: "pet walk 1"),
             SKTexture(imageNamed: "pet walk 2")
         ]
-
-        let animation = SKAction.animate(with: frames, timePerFrame: 0.2)
-        NewPet.run(SKAction.repeatForever(animation))
-        Movement()
+        
+        // create animation sequence
+        let animation = SKAction.repeatForever(SKAction.animate(with: frames, timePerFrame: 0.2))
+        
+        pet.run(animation, withKey: "walk")
+        
+        // create movement back and forth sequence
+        let move = SKAction.move(to: MovetoRan, duration: 3)
+        
+        let cycle = SKAction.sequence([move, SKAction.run { [weak self] in
+                    guard let self = self else { return }
+                    // stops animation
+                    pet.removeAction(forKey: "walk")
+                    pet.texture = SKTexture(imageNamed: "Character")
+                    // resumes animation
+                    self.Movement(for: pet)
+            }
+        ])
+        pet.run(cycle)
     }
     
-    //random movement
-    func Movement() {
-        let ranX = CGFloat.random(in: 50...(size.width - 50))
-        let ranY = CGFloat.random(in: 50...(size.height - 50))
-        let MovetoRan = SKAction.move(to: CGPoint(x: ranX, y: ranY), duration: 3)
-        let RepeatMove = SKAction.sequence([MovetoRan, SKAction.run(Movement)])
-        pet.run(RepeatMove)
-    }
     
     // Death function
-    func death(pet: SKSpriteNode) {
-        let deathAction = SKAction.run {
-            pet.texture = SKTexture(imageNamed: "death")
-        }
-        // kill
-        pet.run(deathAction)
+    func death() {
+        pet.removeAllActions()
+        pet.texture = SKTexture(imageNamed: "death")
     }
 }
 

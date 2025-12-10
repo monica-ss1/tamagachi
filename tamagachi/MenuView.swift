@@ -20,7 +20,7 @@ struct MenuView: View {
 
                 VStack(spacing: -80){
                     // Play button
-                    NavigationLink(value: "game") {
+                    NavigationLink(value: UUID()) {
                         Image("play button")
                             .resizable()
                             .scaledToFit()
@@ -29,7 +29,7 @@ struct MenuView: View {
                     // New game button
                     Button {
                         newTapped()
-                        navigationPath.append("game")
+                        navigationPath.append(UUID())
                         
                     } label: {
                         Image("new game button")
@@ -48,11 +48,9 @@ struct MenuView: View {
                             .frame(width: 250, height: 250)
                     }
                 }
-                        .navigationDestination(for: String.self) {
-                            value in
-                            if value == "game"{
-                                GameView(navigationPath: $navigationPath)
-                        }
+                .navigationDestination(for: UUID.self) { _ in
+                    GameView(navigationPath: $navigationPath)
+                        
                     }
                 }
             }

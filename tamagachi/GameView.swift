@@ -18,15 +18,8 @@ import SpriteKit
 struct GameView: View {
     @StateObject private var pet = PetModel()
     @Environment(\.dismiss) private var dismiss
-    
-    // Pet Spawn
-    var scene: SKScene {
-        let pet = PetBrain()
-        pet.size = CGSize(width: 400, height: 400)
-        pet.scaleMode = .resizeFill
-        pet.backgroundColor = .clear
-        return pet
-    }
+    @State private var scene = PetBrain()
+    @State private var SceneReady = false
     
     var body: some View {
             ZStack {
@@ -37,9 +30,22 @@ struct GameView: View {
                     .ignoresSafeArea(edges: .all)
                     .clipped()
                 
-                // Sputs pet on top of background
-                SKViewContainer(scene: scene)
-                    .ignoresSafeArea()
+                // puts pet on top of background
+                GeometryReader { geo in
+                    SKViewContainer(scene: scene)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .onAppear {
+                            if !SceneReady {
+                                scene.size = geo.size
+                                let center = CGPoint(x: geo.size.width/2, y: geo.size.height/2)
+                                scene.SpawnPet(at: center)
+                                scene.PetSpawned = true
+                                scene.Movement(for: scene.pet)
+                                SceneReady = true
+                            }
+                        }
+                }
+
                 
                 VStack(alignment: .leading) {
                     
@@ -129,25 +135,59 @@ struct GameView: View {
                         Spacer()
             }
         }
+        .onAppear {
+            // Spawn pet once when view appears
+            if !scene.PetSpawned {
+                let center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY)
+                    scene.SpawnPet(at: center)
+                    scene.PetSpawned = true
+                    scene.Movement(for: scene.pet)
+                }
+            }
         .overlay {
             if pet.isDead {
-                deathOverlay
+                VStack(spacing: 20) {
+                    Text("💀 Your Pet Died 💀")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .bold()
+                    
+                    Button("Restart") {
+                        pet.restart()
+                        scene.pet.removeFromParent()
+                        scene.PetSpawned = false
+                        SceneReady = false
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .foregroundColor(.black)
+                    .bold()
+                    .cornerRadius(10)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black.opacity(0.7))
+                .ignoresSafeArea()
             }
         }
     }
     
     // Helper function for pet sprite spawning
     struct SKViewContainer: UIViewRepresentable {
-        let scene: SKScene
+        let scene: PetBrain
 
         func makeUIView(context: Context) -> SKView {
             let view = SKView()
-            view.presentScene(scene)
             view.allowsTransparency = true  //for background image to show
+            view.backgroundColor = .clear
+
+            view.presentScene(scene)
             return view
         }
 
-        func updateUIView(_ uiView: SKView, context: Context) {}
+        func updateUIView(_ uiView: SKView, context: Context) {
+            scene.size = uiView.bounds.size
+            }
+        }
     }
     
     // Helper function for color based on value
@@ -161,28 +201,6 @@ struct GameView: View {
         }
     }
 
-    // Death overlay
-    private var deathOverlay: some View {
-        VStack(spacing: 20) {
-            Text("💀 Your Pet Died 💀")
-                .font(.largeTitle)
-                .foregroundColor(.white)
-                .bold()
-
-            Button("Restart") {
-                pet.restart()
-            }
-            .padding()
-            .background(Color.white)
-            .foregroundColor(.black)
-            .bold()
-            .cornerRadius(10)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.7))
-        .ignoresSafeArea()
-    }
-}
 
 // StatBar component with image overlaying progress bar
 struct StatBar: View {

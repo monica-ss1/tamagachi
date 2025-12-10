@@ -13,26 +13,41 @@ class PetBrain: SKScene {
     
     // pet object
     var pet: SKSpriteNode!
+    var PetSpawned = false
     
     // set pet position
     override func didMove(to view: SKView) {
-        SpawnPet(at:CGPoint(x: 200, y: 300))
-    }
-    func SpawnPet(at position: CGPoint) {
-        // Set up sprite
-        let NewPet = SKSpriteNode(imageNamed: "Character")
-        NewPet.position = position
-        NewPet.zPosition = 1
-        addChild(NewPet)
-        self.pet = NewPet
-        Movement(for: NewPet)
+        backgroundColor = .clear
+        super.didMove(to: view)
+        self.size = view.bounds.size
     }
     
-    //random movement
+    func SpawnPet(at position: CGPoint) {
+        guard pet == nil else { return }
+        // Set up sprite
+        pet = SKSpriteNode(imageNamed: "Character")
+        pet.position = position
+        pet.zPosition = 1
+        addChild(pet)
+    }
+    
+    // Random movement
     func Movement(for pet: SKSpriteNode) {
-        let ranX = CGFloat.random(in: 50...(size.width - 50))
-        let ranY = CGFloat.random(in: 50...(size.height - 50))
+        guard size.width > 0 && size.height > 0 else {
+            // Retry after short delay if size not ready
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+                guard let self = self else { return }
+                self.Movement(for: pet)
+            }
+            return
+        }
+        
+        let margin: CGFloat = 50
+        let ranX = CGFloat.random(in: margin...(size.width - margin))
+        let ranY = CGFloat.random(in: margin...(size.height - margin))
         let MovetoRan = CGPoint(x: ranX, y: ranY)
+        
+        pet.xScale = (MovetoRan.x < pet.position.x) ? -1 : 1
         
         // Animation frames
         let frames = [
@@ -41,24 +56,25 @@ class PetBrain: SKScene {
             SKTexture(imageNamed: "pet walk 2")
         ]
         
-        // create animation sequence
+        // Create animation sequence
         let animation = SKAction.repeatForever(SKAction.animate(with: frames, timePerFrame: 0.2))
-        
         pet.run(animation, withKey: "walk")
         
-        // create movement back and forth sequence
+        // Create movement back and forth sequence
         let move = SKAction.move(to: MovetoRan, duration: 3)
         
-        let cycle = SKAction.sequence([move, SKAction.run { [weak self] in
-                    guard let self = self else { return }
-                    // stops animation
-                    pet.removeAction(forKey: "walk")
-                    pet.texture = SKTexture(imageNamed: "Character")
-                    // resumes animation
-                    self.Movement(for: pet)
+        let cycle = SKAction.sequence([
+            move,
+            SKAction.run { [weak self] in
+                guard let self = self else { return }
+                // Stops animation
+                pet.removeAction(forKey: "walk")
+                pet.texture = SKTexture(imageNamed: "Character")
+                // Resume movement
+                self.Movement(for: pet)
             }
         ])
-        pet.run(cycle)
+        pet.run(cycle, withKey: "move")
     }
     
     

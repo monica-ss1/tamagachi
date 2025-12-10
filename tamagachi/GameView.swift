@@ -17,9 +17,10 @@ import SpriteKit
 
 struct GameView: View {
     @StateObject private var pet = PetModel()
-    @Environment(\.dismiss) private var dismiss
     @State private var scene = PetBrain()
     @State private var SceneReady = false
+    @Binding var navigationPath: NavigationPath
+
     
     var body: some View {
             ZStack {
@@ -121,7 +122,7 @@ struct GameView: View {
                         HStack {
                             Spacer()
                             Button {
-                                dismiss()
+                                navigationPath = NavigationPath()
                             } label: {
                                 Image("main menu button")
                                     .resizable()
@@ -137,15 +138,6 @@ struct GameView: View {
                         Spacer()
             }
         }
-        .onAppear {
-            // Spawn pet once when view appears
-            if !scene.PetSpawned {
-                let center = CGPoint(x: UIScreen.main.bounds.midX,y: UIScreen.main.bounds.midY)
-                    scene.SpawnPet(at: center)
-                    scene.PetSpawned = true
-                    scene.Movement(for: scene.pet)
-                }
-            }
         .overlay {
             if pet.isDead {
                 VStack(spacing: 20) {
@@ -156,8 +148,7 @@ struct GameView: View {
                     
                     Button("Restart") {
                         pet.restart()
-                        scene.pet.removeFromParent()
-                        scene.PetSpawned = false
+                        scene.ResetPet()
                         SceneReady = false
                     }
                     .padding()
@@ -246,5 +237,5 @@ struct StatBar: View {
 }
 
 #Preview {
-    GameView()
+    GameView(navigationPath: .constant(NavigationPath()))
 }

@@ -77,6 +77,12 @@ class PetBrain: SKScene {
         pet.run(cycle, withKey: "move")
     }
     
+    // Restart function
+    func ResetPet() {
+        self.removeAllActions()
+        self.removeAllChildren()
+        self.PetSpawned = false
+    }
     
     // Death function
     func death() {

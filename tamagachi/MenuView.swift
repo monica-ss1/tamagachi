@@ -3,61 +3,64 @@ import SwiftData
 
 struct MenuView: View {
     @State private var navigationPath = NavigationPath()
+    
     var body: some View {
-        NavigationStack {
+        NavigationStack(path:$navigationPath) {
             ZStack {
                 Image("MenuBack")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
+                
                 Image("menu title")
                     .resizable()
                     .scaledToFill()
                     .frame(width: 6, height: 60)
                     .offset(y: -260)
-                NavigationStack(path:$navigationPath){
-                    VStack(spacing: -80){
-                        NavigationLink(value: "game") {
-                            Image("play button")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 250, height: 250)
-                        }
-                        Button {
-                            newTapped()
-                            navigationPath.append("game")
-                            
-                        } label: {
-                            Image("new game button")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 250, height: 250)
-                            
-                        }
-                        Button {
-                            exitTapped()
-                        } label: {
-                            Image("exit button")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 250, height: 250)
-                        }
+
+                VStack(spacing: -80){
+                    NavigationLink(value: "game") {
+                        Image("play button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
+                    }
+                    
+                    Button {
+                        newTapped()
+                        navigationPath.append("game")
+                        
+                    } label: {
+                        Image("new game button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
+                        
+                    }
+                    
+                    Button {
+                        exitTapped()
+                    } label: {
+                        Image("exit button")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 250, height: 250)
+                    }
+                }
                         .navigationDestination(for: String.self) {
                             value in
                             if value == "game"{
-                                GameView()
-                            }
-                            
+                                GameView(navigationPath: $navigationPath)
                         }
                     }
                 }
             }
         }
-    }
+    
     func newTapped() {
         print("New Game tapped")
-        let NewFunction = PetModel()
-        NewFunction.restart()
+        //let NewFunction = PetModel()
+        //NewFunction.restart()
     }
 
     func exitTapped() {

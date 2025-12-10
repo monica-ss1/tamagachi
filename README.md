@@ -15,6 +15,8 @@ SpriteKit — Pet animation and movement
 UserDefaults — Saving and loading stats
 
 ## Screenshots
+<img width="233" height="455" alt="Screenshot 2025-12-09 at 10 41 28 PM" src="https://github.com/user-attachments/assets/aa5c505d-5cfc-4f9e-a4b0-0351c9ab54cd" />
+<img width="245" height="475" alt="Screenshot 2025-12-09 at 10 41 55 PM" src="https://github.com/user-attachments/assets/744e2a26-1b8e-44ab-a7c8-04dd452374e4" />
 
 ## How to Run
 1. Open the project in Xcode 15+
